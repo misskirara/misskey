@@ -53,7 +53,10 @@ export class DeliverProcessorService {
 
 		// ブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if (this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))) {
+		if ((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))&&
+			!(process.env.WHILTE_LIST==='true'))||
+			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host)))&&
+			process.env.WHILTE_LIST==='true')) {
 			return 'skip (blocked)';
 		}
 
