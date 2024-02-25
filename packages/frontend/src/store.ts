@@ -301,7 +301,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	emojiPickerUseDrawerForMobile: {
 		where: 'device',
-		default: true,
+		default: false,
 	},
 	recentlyUsedEmojis: {
 		where: 'device',
