@@ -143,15 +143,12 @@
 	}
 
 	const customCss = localStorage.getItem('customCss');
-	if (customCss && customCss.length > 0) {
-		const misskirara_custom_css=`
-/*不定幅の絵文字をある程度横長に表示してもいいと許すCSS
-by ikakonbu
-ver1.33 (2023/9/17)
-説明書  https://misskey.io/@ikakonbu/pages/1686675880709
+	const misskirara_custom_css=`
+/*横長絵文字をピッカーで見やすくするCSS
+   by curonet
+   ver1.0 (2024/02/25)
 */
 :root {
-/*-------------各種オプション 各自で調整してください--------------*/
 /*--絵文字ウインドウ(他人のノートで+ボタンを押した時、投稿画面で☺️押したとき)の設定--*/
     /*絵文字サイズ*/
     --emoji_default_size: 30px;
@@ -160,7 +157,7 @@ ver1.33 (2023/9/17)
     /*絵文字どうしの間の余白(上下)*/
     --emoji_margin_tb: 2px;
     /*横長の絵文字がどこまで横に広がってもいいか*/
-    --emoji_max_size: 80px;
+    --emoji_max_size: 120px;
     /*上のサイズより横幅がでかい絵文字が出たとき、どう表示するか
     fill 絵文字画像をつぶして、無理やり収める
     contain 絵文字の画像サイズを小さくして、最大サイズにおさまるようにする
@@ -186,6 +183,10 @@ ver1.33 (2023/9/17)
   padding:  10px 5px 5px;
   text-align:center;
 }
+.emojis .value{
+  text-align:left !important;
+}
+
 .emojis .body :not(.value){
   display: inline !important;
   padding:  0 !important;
@@ -222,11 +223,18 @@ ver1.33 (2023/9/17)
 .emojis .item:focus, .emojis .item:hover {
   background: rgba(255,0,0,0.4 );
 }
-		`
+	`;
+	if (customCss && customCss.length > 0) {
 		const style = document.createElement('style');
-		style.innerHTML = customCss+misskirara_custom_css;
+		style.innerHTML = misskirara_custom_css+customCss;
 		document.head.appendChild(style);
 	}
+	else{
+		const style = document.createElement('style');
+		style.innerHTML = misskirara_custom_css;
+		document.head.appendChild(style);
+	}
+
 
 	async function addStyle(styleText) {
 		let css = document.createElement('style');
