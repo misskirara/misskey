@@ -1,0 +1,85 @@
+#!/bin/bash
+
+#USERNAME=$(whoami)
+#if [ ${USERNAME} != "root" ]; then
+#  echo "[ERR] Please run with root privileges."
+#  exit 1
+#fi
+ERR=0
+PROCNAME=$(ps -p $$ -o comm=)
+if [ $PROCNAME != "bash" ] && [ $ERR -eq 0 ]; then
+  echo ""
+  echo "[ERR] Please Run it using the . command."
+  echo "      ex) . changelist -s misskey"
+  ERR=1
+fi
+
+if [ ! -e ./.config/default.yml ] && [ $ERR -eq 0 ]; then
+  echo ""
+  echo "[ERR] No find yml file."
+  ERR=1
+fi
+
+if [ $# -lt 2 ] && [ $ERR -eq 0 ]; then
+  echo ""
+  echo "[ERR] Not enough arguments."
+  echo ""
+  echo "      Usage:"
+  echo "        changelist <command> SERVICENAME"
+  echo "      Change the server list each Safe or Block."
+  echo "        -s, -S, --safe    Change to Safe list."
+  echo "        -b, -b, --block   Change to block list."
+  echo "        -h,     --help    this help and exit."
+  echo "        SERVICENAME       Your Misskey's  service name."
+  echo "        *** Needed psycopg2 ***"
+  echo "        Please install psycopg2 using pip etc."
+  ERR=1
+fi
+
+
+while [ $# -gt 0 ] && [ $ERR -eq 0 ]
+do
+  case $1 in
+    -s | -S | --safe)
+      echo "[INFO] Change to Safe List for $2"
+      echo "[INFO] $2 will be stopping..."
+      #sudo systemctl stop $2
+      echo "[INFO] Changing list."
+      export SAFE_LIST='true'
+      sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
+      python3 changelist.py
+      echo "[INFO] $2 will be restarting..."
+      #sudo systemctl start $2
+      echo "[INFO] Done."
+      ;;
+    -b | -B |--block)
+      echo "[INFO] Change to Block List for $2"
+      echo "[INFO] $2 will be stopping..."
+      #sudo systemctl stop $2
+      echo "[INFO] Changing list."
+      export SAFE_LIST='false'
+      sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
+      python3 changelist.py
+      echo "[INFO] $2 will be restarting..."
+      #sudo systemctl start $2
+      echo "[INFO] Done."
+      ;;
+    -h |--help)
+      echo ""
+      echo "Usage:"
+      echo "  changelist <command> SERVICENAME"
+      echo "Change the server list each Safe or Block."
+      echo "  -s, -S, --safe    Change to Safe list."
+      echo "  -b, -b, --block   Change to block list."
+      echo "  -h,     --help    this help and exit."
+      echo "  SERVICENAME       Your Misskey's  service name."
+      echo ""
+      echo "  *** Needed psycopg2 ***"
+      echo "  Please install psycopg2 using pip etc."
+      ;;
+    -*)
+      echo "[ERR] Invalid option."
+      ;;
+  esac
+  shift
+done

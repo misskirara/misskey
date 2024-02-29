@@ -319,7 +319,8 @@ export class ApNoteService {
 
 		// ブロックしていたら中断
 		const meta = await this.metaService.fetch();
-		if (this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri))) {
+		if (((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri)))  && !(process.env.SAFE_LIST==='true')) ||
+			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri))) &&  (process.env.SAFE_LIST==='true'))) {
 			throw new StatusError('blocked host', 451);
 		}
 
