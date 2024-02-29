@@ -13,6 +13,20 @@ if [ $PROCNAME != "bash" ] && [ $ERR -eq 0 ]; then
   echo "      ex) . changelist -s misskey"
   ERR=1
 fi
+pip3 show psycopg2 &> /dev/null
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "[ERR] Package psycopg2 is required."
+  echo "      Please install psycopg2 using pip."
+  ERR=1
+fi
+
+if [ $PROCNAME != "bash" ] && [ $ERR -eq 0 ]; then
+  echo ""
+  echo "[ERR] Please Run it using the . command."
+  echo "      ex) . changelist -s misskey"
+  ERR=1
+fi
 
 if [ ! -e ./.config/default.yml ] && [ $ERR -eq 0 ]; then
   echo ""
@@ -31,8 +45,6 @@ if [ $# -lt 2 ] && [ $ERR -eq 0 ]; then
   echo "        -b, -b, --block   Change to block list."
   echo "        -h,     --help    this help and exit."
   echo "        SERVICENAME       Your Misskey's  service name."
-  echo "        *** Needed psycopg2 ***"
-  echo "        Please install psycopg2 using pip etc."
   ERR=1
 fi
 
@@ -43,25 +55,25 @@ do
     -s | -S | --safe)
       echo "[INFO] Change to Safe List for $2"
       echo "[INFO] $2 will be stopping..."
-      #sudo systemctl stop $2
+      sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='true'
       sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      #sudo systemctl start $2
+      sudo systemctl start $2
       echo "[INFO] Done."
       ;;
     -b | -B |--block)
       echo "[INFO] Change to Block List for $2"
       echo "[INFO] $2 will be stopping..."
-      #sudo systemctl stop $2
+      sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='false'
       sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      #sudo systemctl start $2
+      sudo systemctl start $2
       echo "[INFO] Done."
       ;;
     -h |--help)
@@ -73,9 +85,6 @@ do
       echo "  -b, -b, --block   Change to block list."
       echo "  -h,     --help    this help and exit."
       echo "  SERVICENAME       Your Misskey's  service name."
-      echo ""
-      echo "  *** Needed psycopg2 ***"
-      echo "  Please install psycopg2 using pip etc."
       ;;
     -*)
       echo "[ERR] Invalid option."
