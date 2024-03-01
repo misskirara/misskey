@@ -63,10 +63,8 @@ export class InboxProcessorService {
 
 		// ブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if ((this.utilityService.isBlockedHost(meta.blockedHosts, host)&&
-			!(process.env.SAFE_LIST==='true'))||
-			(!(this.utilityService.isBlockedHost(meta.blockedHosts, host))&&
-			process.env.SAFE_LIST==='true')) {
+		if ((this.utilityService.isBlockedHost(meta.blockedHosts, host)    && !(process.env.SAFE_LIST=='true'))||
+			(!(this.utilityService.isBlockedHost(meta.blockedHosts, host)) &&   process.env.SAFE_LIST=='true')) {
 			return `Blocked request: ${host}`;
 		}
 
@@ -148,10 +146,8 @@ export class InboxProcessorService {
 
 				// ブロックしてたら中断
 				const ldHost = this.utilityService.extractDbHost(authUser.user.uri);
-				if ((this.utilityService.isBlockedHost(meta.blockedHosts, ldHost)&&
-				!(process.env.SAFE_LIST==='true'))||
-				(!(this.utilityService.isBlockedHost(meta.blockedHosts, ldHost))&&
-				process.env.SAFE_LIST==='true')) {
+				if ((this.utilityService.isBlockedHost(meta.blockedHosts, ldHost)    && !(process.env.SAFE_LIST=='true'))||
+				    (!(this.utilityService.isBlockedHost(meta.blockedHosts, ldHost)) &&   process.env.SAFE_LIST=='true')) {
 					throw new Bull.UnrecoverableError(`Blocked request: ${ldHost}`);
 				}
 			} else {

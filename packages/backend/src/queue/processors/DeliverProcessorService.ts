@@ -53,10 +53,8 @@ export class DeliverProcessorService {
 
 		// ブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if ((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))&&
-			!(process.env.SAFE_LIST==='true'))||
-			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host)))&&
-			process.env.SAFE_LIST==='true')) {
+		if ((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))    && !(process.env.SAFE_LIST=='true'))||
+			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))) &&   process.env.SAFE_LIST=='true')) {
 			return 'skip (blocked)';
 		}
 

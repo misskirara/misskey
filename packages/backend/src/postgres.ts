@@ -7,7 +7,7 @@
 import pg from 'pg';
 pg.types.setTypeParser(20, Number);
 
-import { DataSource, Logger } from 'typeorm';
+import { DataSource, Logger, UsingJoinColumnIsNotAllowedError } from 'typeorm';
 import * as highlight from 'cli-highlight';
 import { entities as charts } from '@/core/chart/entities.js';
 
@@ -97,6 +97,12 @@ class MyCustomLogger implements Logger {
 
 	@bindThis
 	public logQuery(query: string, parameters?: any[]) {
+		console.log(`SAFE_LIST= ${process.env.SAFE_LIST}`);
+		if(process.env.SAFE_LIST=='true')
+			console.log(`SAFE_LIST == true`);
+		if(process.env.SAFE_LIST==='true')
+			console.log(`SAFE_LIST === true`);
+		
 		sqlLogger.info(this.highlight(query).substring(0, 100));
 	}
 
