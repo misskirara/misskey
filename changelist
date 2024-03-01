@@ -55,25 +55,25 @@ do
     -s | -S | --safe)
       echo "[INFO] Change to Safe List for $2"
       echo "[INFO] $2 will be stopping..."
-      sudo systemctl stop $2
+      #sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='true'
       sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      sudo systemctl start $2
+      #sudo systemctl start $2
       echo "[INFO] Done."
       ;;
     -b | -B |--block)
       echo "[INFO] Change to Block List for $2"
       echo "[INFO] $2 will be stopping..."
-      sudo systemctl stop $2
+      #sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='false'
       sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      sudo systemctl start $2
+      #sudo systemctl start $2
       echo "[INFO] Done."
       ;;
     -h |--help)

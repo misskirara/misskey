@@ -275,8 +275,8 @@ export class ApInboxService {
 
 		// アナウンス先をブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if (((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri)))  && !(process.env.SAFE_LIST==='true')) ||
-			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri))) &&  (process.env.SAFE_LIST==='true')))
+		if (((this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri)))  && !(process.env.SAFE_LIST=='true')) ||
+			(!(this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri))) &&  (process.env.SAFE_LIST=='true')))
 				return;
 
 		const unlock = await this.appLockService.getApLock(uri);
