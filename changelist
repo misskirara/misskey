@@ -48,6 +48,14 @@ if [ $# -lt 2 ] && [ $ERR -eq 0 ]; then
   ERR=1
 fi
 
+if [ ! -d /etc/sysconfig ] && [ $ERR -eq 0 ]; then
+  sudo mkdir /etc/sysconfig
+  if [[ "$2" == *.service* ]]; then
+    sudo sed -i '/TimeoutSec=60/i EnvironmentFile=\/etc\/sysconfig\/safelist' /etc/systemd/system/$2
+  else
+    sudo sed -i '/TimeoutSec=60/i EnvironmentFile=\/etc\/sysconfig\/safelist' /etc/systemd/system/$2.service
+  fi
+fi
 
 while [ $# -gt 0 ] && [ $ERR -eq 0 ]
 do
@@ -59,8 +67,10 @@ do
       echo "[INFO] Changing list."
       export SAFE_LIST='true'
       sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
+      sudo echo "SAFE_LIST='true'" | sudo tee /etc/sysconfig/safelist
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
+      #sudo systemctl daemon-reload 
       #sudo systemctl start $2
       echo "[INFO] Done."
       ;;
@@ -71,8 +81,10 @@ do
       echo "[INFO] Changing list."
       export SAFE_LIST='false'
       sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
+      sudo echo "SAFE_LIST='false'" | sudo tee /etc/sysconfig/safelist
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
+      #sudo systemctl daemon-reload 
       #sudo systemctl start $2
       echo "[INFO] Done."
       ;;

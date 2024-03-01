@@ -97,12 +97,6 @@ class MyCustomLogger implements Logger {
 
 	@bindThis
 	public logQuery(query: string, parameters?: any[]) {
-		console.log(`SAFE_LIST= ${process.env.SAFE_LIST}`);
-		if(process.env.SAFE_LIST=='true')
-			console.log(`SAFE_LIST == true`);
-		if(process.env.SAFE_LIST==='true')
-			console.log(`SAFE_LIST === true`);
-		
 		sqlLogger.info(this.highlight(query).substring(0, 100));
 	}
 
