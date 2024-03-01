@@ -10,7 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<FormSuspense :p="init">
 			<MkTextarea v-if="tab === 'block'" v-model="blockedHosts">
 				<span>{{ i18n.ts.blockedInstances }}</span>
-				<template #caption>{{ i18n.ts.blockedInstancesDescription }}</template>
+				<template #caption>{{ listdiscrption }}</template>
 			</MkTextarea>
 			<MkTextarea v-else-if="tab === 'silence'" v-model="silencedHosts" class="_formBlock">
 				<span>{{ i18n.ts.silencedInstances }}</span>
@@ -37,11 +37,13 @@ import { definePageMetadata } from '@/scripts/page-metadata.js';
 const blockedHosts = ref<string>('');
 const silencedHosts = ref<string>('');
 const tab = ref('block');
+let listdiscrption=ref<string>('');
 
 async function init() {
 	const meta = await misskeyApi('admin/meta');
 	blockedHosts.value = meta.blockedHosts.join('\n');
 	silencedHosts.value = meta.silencedHosts.join('\n');
+	listdiscrption.value = import.meta.env.VITE_SAFE_LIST=='true' ? "現在セーフリストモードです。疎通したいサーバーのホストを改行で区切って設定します。この一覧にいないサーバーは、このインスタンスとやり取りできなくなります。" : i18n.ts.blockedInstancesDescription;
 }
 
 function save() {

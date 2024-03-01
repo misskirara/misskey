@@ -63,29 +63,55 @@ do
     -s | -S | --safe)
       echo "[INFO] Change to Safe List for $2"
       echo "[INFO] $2 will be stopping..."
-      #sudo systemctl stop $2
+      sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='true'
       sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
       sudo echo "SAFE_LIST='true'" | sudo tee /etc/sysconfig/safelist
+      sudo echo "VITE_SAFE_LIST='true'" | sudo tee packages/frontend/.env.production
+      NODE_ENV=production pnpm run build
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      #sudo systemctl daemon-reload 
-      #sudo systemctl start $2
+      sudo systemctl daemon-reload 
+      sudo systemctl start $2
       echo "[INFO] Done."
       ;;
     -b | -B |--block)
       echo "[INFO] Change to Block List for $2"
       echo "[INFO] $2 will be stopping..."
-      #sudo systemctl stop $2
+      sudo systemctl stop $2
       echo "[INFO] Changing list."
       export SAFE_LIST='false'
       sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
       sudo echo "SAFE_LIST='false'" | sudo tee /etc/sysconfig/safelist
+      sudo echo "VITE_SAFE_LIST='false'" | sudo tee packages/frontend/.env.production
+      NODE_ENV=production pnpm run build
       python3 changelist.py
       echo "[INFO] $2 will be restarting..."
-      #sudo systemctl daemon-reload 
-      #sudo systemctl start $2
+      sudo systemctl daemon-reload 
+      sudo systemctl start $2
+      echo "[INFO] Done."
+      ;;
+    -dbgs | -s-no-systemctl)
+      echo "[INFO] Change to Safe List for $2"
+      echo "[INFO] Changing list."
+      export SAFE_LIST='true'
+      sudo echo "export SAFE_LIST='true'" | sudo tee /etc/profile.d/changelist.sh
+      sudo echo "SAFE_LIST='true'" | sudo tee /etc/sysconfig/safelist
+      sudo echo "VITE_SAFE_LIST='true'" | sudo tee packages/frontend/.env.production
+      NODE_ENV=production pnpm run build
+      python3 changelist.py
+      echo "[INFO] Done."
+      ;;
+    -dbgb | -b-no-systemctl)
+      echo "[INFO] Change to Block List for $2"
+      echo "[INFO] Changing list."
+      export SAFE_LIST='false'
+      sudo echo "export SAFE_LIST='false'" | sudo tee /etc/profile.d/changelist.sh
+      sudo echo "SAFE_LIST='false'" | sudo tee /etc/sysconfig/safelist
+      sudo echo "VITE_SAFE_LIST='false'" | sudo tee packages/frontend/.env.production
+      NODE_ENV=production pnpm run build
+      python3 changelist.py
       echo "[INFO] Done."
       ;;
     -h |--help)

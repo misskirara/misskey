@@ -75,7 +75,8 @@ const pagination = {
 			state.value === 'subscribing' ? { subscribing: true } :
 			state.value === 'publishing' ? { publishing: true } :
 			state.value === 'suspended' ? { suspended: true } :
-			state.value === 'blocked' ? { blocked: true } :
+			(state.value === 'blocked') && (import.meta.env.VITE_SAFE_LIST!='true') ? { blocked: true } :
+			(state.value === 'blocked') && (import.meta.env.VITE_SAFE_LIST=='true') ? { blocked: false } :
 			state.value === 'silenced' ? { silenced: true } :
 			state.value === 'notResponding' ? { notResponding: true } :
 			{}),
@@ -84,7 +85,8 @@ const pagination = {
 
 function getStatus(instance) {
 	if (instance.isSuspended) return 'Suspended';
-	if (instance.isBlocked) return 'Blocked';
+	if ((instance.isBlocked)  && !(import.meta.env.VITE_SAFE_LIST=='true')) return 'Blocked';
+	if (!(instance.isBlocked) &&  (import.meta.env.VITE_SAFE_LIST=='true')) return 'Blocked';
 	if (instance.isSilenced) return 'Silenced';
 	if (instance.isNotResponding) return 'Error';
 	return 'Alive';
