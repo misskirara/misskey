@@ -8138,15 +8138,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-<<<<<<< HEAD
-      '@typescript-eslint/types': 6.18.1
-      '@typescript-eslint/visitor-keys': 6.18.1
-      debug: 4.3.4(supports-color@5.5.0)
-=======
       '@typescript-eslint/types': 7.1.0
       '@typescript-eslint/visitor-keys': 7.1.0
       debug: 4.3.4(supports-color@8.1.1)
->>>>>>> upstream/master
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
