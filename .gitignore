@@ -69,3 +69,8 @@ tsdoc-metadata.json
 
 # VSCode addon
 .favorites.json
+
+# serverlist local files
+block_list
+liststatus
+safe_list
