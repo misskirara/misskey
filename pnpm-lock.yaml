@@ -7957,15 +7957,6 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.6.2
-<<<<<<< HEAD
-      '@typescript-eslint/parser': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/scope-manager': 6.18.1
-      '@typescript-eslint/type-utils': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/utils': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/visitor-keys': 6.18.1
-      debug: 4.3.4(supports-color@5.5.0)
-      eslint: 8.56.0
-=======
       '@typescript-eslint/parser': 7.1.0(eslint@8.57.0)(typescript@5.3.3)
       '@typescript-eslint/scope-manager': 7.1.0
       '@typescript-eslint/type-utils': 7.1.0(eslint@8.57.0)(typescript@5.3.3)
@@ -7973,7 +7964,6 @@ packages:
       '@typescript-eslint/visitor-keys': 7.1.0
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 8.57.0
->>>>>>> upstream/master
       graphemer: 1.4.0
       ignore: 5.2.4
       natural-compare: 1.4.0
@@ -8015,21 +8005,12 @@ packages:
       typescript:
         optional: true
     dependencies:
-<<<<<<< HEAD
-      '@typescript-eslint/scope-manager': 6.18.1
-      '@typescript-eslint/types': 6.18.1
-      '@typescript-eslint/typescript-estree': 6.18.1(typescript@5.3.3)
-      '@typescript-eslint/visitor-keys': 6.18.1
-      debug: 4.3.4(supports-color@5.5.0)
-      eslint: 8.56.0
-=======
       '@typescript-eslint/scope-manager': 7.1.0
       '@typescript-eslint/types': 7.1.0
       '@typescript-eslint/typescript-estree': 7.1.0(typescript@5.3.3)
       '@typescript-eslint/visitor-keys': 7.1.0
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 8.57.0
->>>>>>> upstream/master
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -8081,17 +8062,10 @@ packages:
       typescript:
         optional: true
     dependencies:
-<<<<<<< HEAD
-      '@typescript-eslint/typescript-estree': 6.18.1(typescript@5.3.3)
-      '@typescript-eslint/utils': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
-      debug: 4.3.4(supports-color@5.5.0)
-      eslint: 8.56.0
-=======
       '@typescript-eslint/typescript-estree': 7.1.0(typescript@5.3.3)
       '@typescript-eslint/utils': 7.1.0(eslint@8.57.0)(typescript@5.3.3)
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 8.57.0
->>>>>>> upstream/master
       ts-api-utils: 1.0.1(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -19394,13 +19368,8 @@ packages:
       acorn-walk: 8.3.2
       cac: 6.7.14
       chai: 4.3.10
-<<<<<<< HEAD
-      debug: 4.3.4(supports-color@5.5.0)
-      happy-dom: 10.0.3
-=======
       debug: 4.3.4(supports-color@8.1.1)
       happy-dom: 13.6.2
->>>>>>> upstream/master
       local-pkg: 0.4.3
       magic-string: 0.30.7
       pathe: 1.1.2
@@ -19525,13 +19494,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
-<<<<<<< HEAD
-      debug: 4.3.4(supports-color@5.5.0)
-      eslint: 8.56.0
-=======
       debug: 4.3.4(supports-color@8.1.1)
       eslint: 8.57.0
->>>>>>> upstream/master
       eslint-scope: 7.2.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
