@@ -144,85 +144,85 @@
 
 	const customCss = localStorage.getItem('customCss');
 	const misskirara_custom_css=`
-/*横長絵文字をピッカーで見やすくするCSS
-   by curonet
-   ver1.0 (2024/02/25)
-*/
-:root {
-/*--絵文字ウインドウ(他人のノートで+ボタンを押した時、投稿画面で☺️押したとき)の設定--*/
-    /*絵文字サイズ*/
-    --emoji_default_size: 30px;
-    /*絵文字どうしの間の余白(横)*/
-    --emoji_margin_lr: 6px;
-    /*絵文字どうしの間の余白(上下)*/
-    --emoji_margin_tb: 2px;
-    /*横長の絵文字がどこまで横に広がってもいいか*/
-    --emoji_max_size: 120px;
-    /*上のサイズより横幅がでかい絵文字が出たとき、どう表示するか
-    fill 絵文字画像をつぶして、無理やり収める
-    contain 絵文字の画像サイズを小さくして、最大サイズにおさまるようにする
-    cover　はみ出た分は表示しない*/
-    --emoji_displey_style: fill;
-         /*絵文字ウインドウサイズ(縦,横)
-        これを設定したい場合はページ下の追加設定の欄を参照*/
-        --emoji_window_default_height: 400px;
-        --emoji_window_default_width: 400px;
-/*----------------------------------------------*/
-  
-  
-/*絵文字補完ウインドウ(投稿画面で :　って入力すると出てくる予測変換)に対する設定*/
-    /*横長の絵文字がどこまで横に広がってもいいか*/
-    --emoji_autofill_max_width:  300px;
-      /*上のサイズより横幅がでかい絵文字が出たとき、どう表示するか (上の--emoji_display_styleと設定できる項目は同じです)*/
-    --emoji_autofill_displey_style: fill;
-/*-----------------各種オプションおわり-------------------*/
-}
+	/*横長絵文字をピッカーで見やすくするCSS
+	by curonet
+	ver1.0 (2024/02/25)
+	*/
+	:root {
+	/*--絵文字ピッカーの設定--------------------------*/
+		/*絵文字サイズ*/
+		--emoji_default_size: 30px;
+		/*絵文字間の余白(上下)*/
+		--emoji_margin_tb: 2px;
+		/*絵文字間の余白(左右)*/
+		--emoji_margin_lr: 6px;
+		/*横長の絵文字の許容幅*/
+		--emoji_max_size: 120px;
+		/*上記サイズより横幅が長い絵文字が出たときの対応
+		fill    :絵文字画像をつぶして、無理やり収める
+		contain :絵文字の画像サイズを小さくして、最大サイズに収まるようにする
+		cover   :はみ出た分は表示しない*/
+		--emoji_displey_style: fill;
+			/*絵文字ウインドウサイズ(縦,横)
+			これを設定したい場合はページ下の追加設定の欄を参照*/
+			--emoji_window_default_height: 400px;
+			--emoji_window_default_width: 400px;
+	/*----------------------------------------------*/
+	
+	
+	/*絵文字補完ウインドウ(投稿画面で : って入力すると出てくる予測変換)に対する設定*/
+		/*横長の絵文字の許容幅*/
+		--emoji_autofill_max_width:  300px;
+		/*上記サイズより横幅が長い絵文字が出たときの対応 (上の--emoji_display_styleと設定できる項目は同じ)*/
+		--emoji_autofill_displey_style: fill;
+	/*-----------------各種オプションおわり-------------------*/
+	}
 
-/*コード本体　ここから先はオプションではないです。適切にいじらないと壊れます*/
-.emojis {
-  padding:  10px 5px 5px;
-  text-align:center;
-}
-.emojis .value{
-  text-align:left !important;
-}
+	/*コード本体 ここから先はオプションではないです。適切にいじらないと壊れます*/
+	.emojis {
+	padding:  10px 5px 5px;
+	text-align:center;
+	}
+	.emojis .value{
+	text-align:left !important;
+	}
 
-.emojis .body :not(.value){
-  display: inline !important;
-  padding:  0 !important;
-  line-height: 0;
-}
-.emojis section>.body ._button.item{
-  height: auto !important;
-}
-.emojis ._button.item{
-  aspect-ratio: auto!important;
-  width: fit-content !important;
-  contain: layout !important;
-  margin: 0px !important;
-  padding: var(--emoji_margin_tb)  var(--emoji_margin_lr)  !important;
-  min-height:  var(--emoji_default_size) !important;
-}
-.emojis .xeJ4G{
-  width: auto !important;
-  height: var(--emoji_default_size) !important;
-  object-fit: var(--emoji_displey_style) !important;
-  object-position: 0% 50%;
-  max-width: var(--emoji_max_size);
-}
- .xeJ4G.xuoKL, ._emoji_1pjrm_56 {
-  width: auto !important;
-  object-fit: var(--emoji_autofill_displey_style) !important;
-  object-position: 0% 50%;
-  max-width: var(--emoji_autofill_max_width);
-}
-.omfetrab:is(.s1,.s2,.s3)[data-v-c34d1549] .emojis{
-    --eachSize: fit-content !important;
-}
+	.emojis .body :not(.value){
+	display: inline !important;
+	padding:  0 !important;
+	line-height: 0;
+	}
+	.emojis section>.body ._button.item{
+	height: auto !important;
+	}
+	.emojis ._button.item{
+	aspect-ratio: auto!important;
+	width: fit-content !important;
+	contain: layout !important;
+	margin: 0px !important;
+	padding: var(--emoji_margin_tb)  var(--emoji_margin_lr)  !important;
+	min-height:  var(--emoji_default_size) !important;
+	}
+	.emojis .xeJ4G{
+	width: auto !important;
+	height: var(--emoji_default_size) !important;
+	object-fit: var(--emoji_displey_style) !important;
+	object-position: 0% 50%;
+	max-width: var(--emoji_max_size);
+	}
+	.xeJ4G.xuoKL, ._emoji_1pjrm_56 {
+	width: auto !important;
+	object-fit: var(--emoji_autofill_displey_style) !important;
+	object-position: 0% 50%;
+	max-width: var(--emoji_autofill_max_width);
+	}
+	.omfetrab:is(.s1,.s2,.s3)[data-v-c34d1549] .emojis{
+		--eachSize: fit-content !important;
+	}
 
-.emojis .item:focus, .emojis .item:hover {
-  background: rgba(255,0,0,0.4 );
-}
+	.emojis .item:focus, .emojis .item:hover {
+	background: rgba(255,0,0,0.4 );
+	}
 	`;
 	if (customCss && customCss.length > 0) {
 		const style = document.createElement('style');
