@@ -8,6 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><XHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 	<MkSpacer :contentMax="700" :marginMin="16" :marginMax="32">
 		<FormSuspense :p="init">
+<<<<<<< HEAD
 			<MkTextarea v-if="tab === 'block'" v-model="blockedHosts">
 				<span>{{ i18n.ts.blockedInstances }}</span>
 				<template #caption>{{ listdiscrption }}</template>
@@ -16,6 +17,24 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<span>{{ i18n.ts.silencedInstances }}</span>
 				<template #caption>{{ i18n.ts.silencedInstancesDescription }}</template>
 			</MkTextarea>
+=======
+			<template v-if="tab === 'block'">
+				<MkTextarea v-model="blockedHosts">
+					<span>{{ i18n.ts.blockedInstances }}</span>
+					<template #caption>{{ i18n.ts.blockedInstancesDescription }}</template>
+				</MkTextarea>
+			</template>
+			<template v-else-if="tab === 'silence'">
+				<MkTextarea v-model="silencedHosts" class="_formBlock">
+					<span>{{ i18n.ts.silencedInstances }}</span>
+					<template #caption>{{ i18n.ts.silencedInstancesDescription }}</template>
+				</MkTextarea>
+				<MkTextarea v-model="mediaSilencedHosts" class="_formBlock">
+					<span>{{ i18n.ts.mediaSilencedInstances }}</span>
+					<template #caption>{{ i18n.ts.mediaSilencedInstancesDescription }}</template>
+				</MkTextarea>
+			</template>
+>>>>>>> upstream/master
 			<MkButton primary @click="save"><i class="ti ti-device-floppy"></i> {{ i18n.ts.save }}</MkButton>
 		</FormSuspense>
 	</MkSpacer>
@@ -36,6 +55,7 @@ import { definePageMetadata } from '@/scripts/page-metadata.js';
 
 const blockedHosts = ref<string>('');
 const silencedHosts = ref<string>('');
+const mediaSilencedHosts = ref<string>('');
 const tab = ref('block');
 let listdiscrption=ref<string>('');
 
@@ -43,13 +63,18 @@ async function init() {
 	const meta = await misskeyApi('admin/meta');
 	blockedHosts.value = meta.blockedHosts.join('\n');
 	silencedHosts.value = meta.silencedHosts.join('\n');
+<<<<<<< HEAD
 	listdiscrption.value = import.meta.env.VITE_SAFE_LIST=='true' ? "現在セーフリストモードです。疎通したいサーバーのホストを改行で区切って設定します。この一覧にいないサーバーは、このインスタンスとやり取りできなくなります。" : i18n.ts.blockedInstancesDescription;
+=======
+	mediaSilencedHosts.value = meta.mediaSilencedHosts.join('\n');
+>>>>>>> upstream/master
 }
 
 function save() {
 	os.apiWithDialog('admin/update-meta', {
 		blockedHosts: blockedHosts.value.split('\n') || [],
 		silencedHosts: silencedHosts.value.split('\n') || [],
+		mediaSilencedHosts: mediaSilencedHosts.value.split('\n') || [],
 
 	}).then(() => {
 		fetchInstance(true);
