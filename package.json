@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
 	"name": "misskirara",
-	"version": "2024.5.0-misskirara-1.3",
-=======
-	"name": "misskey",
-	"version": "2024.7.0",
->>>>>>> upstream/master
+	"version": "2024.7.0-misskirara-1.3",
 	"codename": "nasubi",
 	"repository": {
 		"type": "git",
