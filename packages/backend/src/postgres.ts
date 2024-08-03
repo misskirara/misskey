@@ -5,13 +5,7 @@
 
 // https://github.com/typeorm/typeorm/issues/2400
 import pg from 'pg';
-<<<<<<< HEAD
-pg.types.setTypeParser(20, Number);
-
-import { DataSource, Logger, UsingJoinColumnIsNotAllowedError } from 'typeorm';
-=======
 import { DataSource, Logger } from 'typeorm';
->>>>>>> upstream/master
 import * as highlight from 'cli-highlight';
 import { entities as charts } from '@/core/chart/entities.js';
 
