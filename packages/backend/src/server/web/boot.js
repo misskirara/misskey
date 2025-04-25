@@ -127,11 +127,6 @@
 		document.documentElement.classList.add('useSystemFont');
 	}
 
-	const wallpaper = localStorage.getItem('wallpaper');
-	if (wallpaper) {
-		document.documentElement.style.backgroundImage = `url(${wallpaper})`;
-	}
-
 	const customCss = localStorage.getItem('customCss');
 	const misskirara_custom_css=`
 	/*横長絵文字をピッカーで見やすくするCSS
