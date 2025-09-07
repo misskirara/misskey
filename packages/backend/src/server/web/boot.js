@@ -110,8 +110,9 @@
 		document.documentElement.classList.add('useSystemFont');
 	}
 
-	const customCss = localStorage.getItem('customCss');
-	const misskirara_custom_css=`
+	
+	if (!isSafeMode) {
+		const misskirara_custom_css=`
 	/*横長絵文字をピッカーで見やすくするCSS
 	by curonet
 	ver1.0 (2024/02/25)
@@ -192,18 +193,17 @@
 	background: rgba(255,0,0,0.4 );
 	}
 	`;
-	if (!isSafeMode) {
 		const customCss = localStorage.getItem('customCss');
 		if (customCss && customCss.length > 0) {
 			const style = document.createElement('style');
 			style.innerHTML = misskirara_custom_css+customCss;
 			document.head.appendChild(style);
 		}
-	}
-	else{
-		const style = document.createElement('style');
-		style.innerHTML = misskirara_custom_css;
-		document.head.appendChild(style);
+		else{
+			const style = document.createElement('style');
+			style.innerHTML = misskirara_custom_css;
+			document.head.appendChild(style);
+		}
 	}
 
 
