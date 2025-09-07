@@ -192,16 +192,11 @@
 	background: rgba(255,0,0,0.4 );
 	}
 	`;
-	if (customCss && customCss.length > 0) {
-		const style = document.createElement('style');
-		style.innerHTML = misskirara_custom_css+customCss;
-		document.head.appendChild(style);
-	}
-	else if (!isSafeMode) {
+	if (!isSafeMode) {
 		const customCss = localStorage.getItem('customCss');
 		if (customCss && customCss.length > 0) {
 			const style = document.createElement('style');
-			style.innerHTML = customCss;
+			style.innerHTML = misskirara_custom_css+customCss;
 			document.head.appendChild(style);
 		}
 	}
