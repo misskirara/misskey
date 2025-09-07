@@ -110,7 +110,6 @@
 		document.documentElement.classList.add('useSystemFont');
 	}
 
-<<<<<<< HEAD
 	const customCss = localStorage.getItem('customCss');
 	const misskirara_custom_css=`
 	/*横長絵文字をピッカーで見やすくするCSS
@@ -197,15 +196,14 @@
 		const style = document.createElement('style');
 		style.innerHTML = misskirara_custom_css+customCss;
 		document.head.appendChild(style);
-=======
-	if (!isSafeMode) {
+	}
+	else if (!isSafeMode) {
 		const customCss = localStorage.getItem('customCss');
 		if (customCss && customCss.length > 0) {
 			const style = document.createElement('style');
 			style.innerHTML = customCss;
 			document.head.appendChild(style);
 		}
->>>>>>> upstream/master
 	}
 	else{
 		const style = document.createElement('style');
