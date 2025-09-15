@@ -54,6 +54,7 @@ export class S3Service {
 
 	@bindThis
 	public getOCIClient(meta: MiMeta): S3Client {
+		console.log(process.env.OCI_ENDPOINT)
 		const uo = `${meta.objectStorageUseSSL ? 'https' : 'http'}://${String(process.env.OCI_ENDPOINT)}`;
 		const agento = this.httpRequestService.getAgentByUrl(new URL(uo), !meta.objectStorageUseProxy, true);
 		const handlerOptiono: NodeHttpHandlerOptions = {};
