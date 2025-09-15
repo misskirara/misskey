@@ -4,6 +4,7 @@
  */
 
 import { URL } from 'node:url';
+import * as fs from 'node:fs';
 import * as http from 'node:http';
 import * as https from 'node:https';
 import { Injectable } from '@nestjs/common';
@@ -52,8 +53,44 @@ export class S3Service {
 	}
 
 	@bindThis
-	public async upload(meta: MiMeta, input: PutObjectCommandInput) {
+	public getOCIClient(meta: MiMeta): S3Client {
+		const uo = `${meta.objectStorageUseSSL ? 'https' : 'http'}://${String(process.env.OCI_ENDPOINT)}`;
+		const agento = this.httpRequestService.getAgentByUrl(new URL(uo), !meta.objectStorageUseProxy, true);
+		const handlerOptiono: NodeHttpHandlerOptions = {};
+		if (meta.objectStorageUseSSL) {
+			handlerOptiono.httpsAgent = agento as https.Agent;
+		} else {
+			handlerOptiono.httpAgent = agento as http.Agent;
+		}
+
+		return new S3Client({
+			endpoint: uo,
+			credentials: {
+				accessKeyId: String(process.env.OCI_ACCKEY),
+				secretAccessKey: String(process.env.OCI_SECKEY),
+			},
+			region: String(process.env.OCI_REGION),
+			tls: meta.objectStorageUseSSL,
+			forcePathStyle: meta.objectStorageS3ForcePathStyle,
+			requestHandler: new NodeHttpHandler(handlerOptiono),
+			requestChecksumCalculation: 'WHEN_REQUIRED',
+			responseChecksumValidation: 'WHEN_REQUIRED',
+		});
+	}	
+
+	@bindThis
+	public async upload(meta: MiMeta, input: PutObjectCommandInput, path: string) {
+		const oci_client=this.getOCIClient(meta);
 		const client = this.getS3Client(meta);
+		const input_oci={...input,Bucket:String(process.env.OCI_BUCKET)}
+		new Upload({
+			client:oci_client,
+			params: typeof input_oci.Body==="string" ? input_oci : {...input_oci,Body:fs.createReadStream(path)},
+			partSize: (oci_client.config.endpoint && (await oci_client.config.endpoint()).hostname === 'storage.googleapis.com')
+				? 500 * 1024 * 1024
+				: 8 * 1024 * 1024,
+		}).done();
+
 		return new Upload({
 			client,
 			params: input,
@@ -61,6 +98,7 @@ export class S3Service {
 				? 500 * 1024 * 1024
 				: 8 * 1024 * 1024,
 		}).done();
+		
 	}
 
 	@bindThis

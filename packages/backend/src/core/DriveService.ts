@@ -187,7 +187,7 @@ export class DriveService {
 			//#region Uploads
 			this.registerLogger.info(`uploading original: ${key}`);
 			const uploads = [
-				this.upload(key, fs.createReadStream(path), type, null, name),
+				this.upload(key, fs.createReadStream(path), type, null, name, path),
 			];
 
 			if (alts.webpublic) {
@@ -195,7 +195,7 @@ export class DriveService {
 				webpublicUrl = `${ baseUrl }/${ webpublicKey }`;
 
 				this.registerLogger.info(`uploading webpublic: ${webpublicKey}`);
-				uploads.push(this.upload(webpublicKey, alts.webpublic.data, alts.webpublic.type, alts.webpublic.ext, name));
+				uploads.push(this.upload(webpublicKey, alts.webpublic.data, alts.webpublic.type, alts.webpublic.ext, name, path));
 			}
 
 			if (alts.thumbnail) {
@@ -203,7 +203,7 @@ export class DriveService {
 				thumbnailUrl = `${ baseUrl }/${ thumbnailKey }`;
 
 				this.registerLogger.info(`uploading thumbnail: ${thumbnailKey}`);
-				uploads.push(this.upload(thumbnailKey, alts.thumbnail.data, alts.thumbnail.type, alts.thumbnail.ext, `${name}.thumbnail`));
+				uploads.push(this.upload(thumbnailKey, alts.thumbnail.data, alts.thumbnail.type, alts.thumbnail.ext, `${name}.thumbnail`, path));
 			}
 
 			await Promise.all(uploads);
@@ -372,7 +372,7 @@ export class DriveService {
 	 * Upload to ObjectStorage
 	 */
 	@bindThis
-	private async upload(key: string, stream: fs.ReadStream | Buffer, type: string, ext?: string | null, filename?: string) {
+	private async upload(key: string, stream: fs.ReadStream | Buffer, type: string, ext?: string | null, filename?: string, path?:string) {
 		if (type === 'image/apng') type = 'image/png';
 		if (!FILE_TYPE_BROWSERSAFE.includes(type)) type = 'application/octet-stream';
 
@@ -392,7 +392,7 @@ export class DriveService {
 		);
 		if (this.meta.objectStorageSetPublicRead) params.ACL = 'public-read';
 
-		await this.s3Service.upload(this.meta, params)
+		await this.s3Service.upload(this.meta, params,!path?"":path)
 			.then(
 				result => {
 					if ('Bucket' in result) { // CompleteMultipartUploadCommandOutput
