@@ -98,7 +98,7 @@ const paginator = markRaw(new Paginator('federation/instances', {
 	})),
 }));
 
-function getStatus(instance) {
+function getStatus(instance: Misskey.entities.FederationInstance) {
 	if (instance.isSuspended) return 'Suspended';
 	if ((instance.isBlocked)  && !(import.meta.env.VITE_SAFE_LIST=='true')) return 'Blocked';
 	if (!(instance.isBlocked) &&  (import.meta.env.VITE_SAFE_LIST=='true')) return 'Blocked';
